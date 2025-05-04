@@ -1,0 +1,995 @@
+{
+  "baseURL": "http://localhost:5000",
+  "withCredentials": true,
+  "endpoints": [
+    {
+      "group": "Pets",
+      "routes": [
+        { "method": "GET", "path": "/pets", "description": "Get all pets" },
+        { "method": "POST", "path": "/pets", "description": "Add a new pet" },
+        { "method": "PUT", "path": "/pets/:id", "description": "Update a pet by ID" },
+        { "method": "PATCH", "path": "/pets/:id/adopt", "description": "Mark a pet as adopted" },
+        { "method": "DELETE", "path": "/pets/:id", "description": "Delete a pet by ID" },
+        { "method": "GET", "path": "/pets/filter/mood", "query": ["mood"], "description": "Filter pets by mood" }
+      ]
+    },
+    {
+      "group": "Species",
+      "routes": [
+        { "method": "GET", "path": "/species", "description": "Get all species" },
+        { "method": "POST", "path": "/species", "description": "Add a new species" },
+        { "method": "PUT", "path": "/species/:id", "description": "Update a species by ID" },
+        { "method": "DELETE", "path": "/species/:id", "description": "Delete a species by ID" },
+        { "method": "GET", "path": "/species/:id", "description": "Get species by ID" }
+      ]
+    },
+    {
+      "group": "Personality",
+      "routes": [
+        { "method": "GET", "path": "/personalities", "description": "Get all personality traits" },
+        { "method": "POST", "path": "/personalities", "description": "Add a new personality trait" },
+        { "method": "PUT", "path": "/personalities/:id", "description": "Update a personality by ID" },
+        { "method": "DELETE", "path": "/personalities/:id", "description": "Delete a personality by ID" },
+        { "method": "GET", "path": "/personalities/:id", "description": "Get personality by ID" }
+      ]
+    },
+    {
+      "group": "Authentication",
+      "routes": [
+        { "method": "POST", "path": "/auth/register", "description": "User registration" },
+        { "method": "POST", "path": "/auth/login", "description": "User login" },
+        { "method": "POST", "path": "/auth/logout", "description": "User logout" },
+        { "method": "GET", "path": "/auth/me", "description": "Check authenticated user" }
+      ]
+    },
+    {
+      "group": "Admin",
+      "routes": [
+        { "method": "POST", "path": "/admin/register", "description": "Admin registration" },
+        { "method": "POST", "path": "/admin/login", "description": "Admin login" },
+        { "method": "POST", "path": "/admin/logout", "description": "Admin logout" },
+        { "method": "GET", "path": "/admin/profile", "description": "Get current admin profile" },
+        { "method": "GET", "path": "/admin/:id", "description": "Get admin by ID" },
+        { "method": "PUT", "path": "/admin/:id", "description": "Update admin by ID" }
+      ]
+    },
+    {
+      "group": "Contacts",
+      "routes": [
+        { "method": "POST", "path": "/contacts", "description": "Send a contact message" },
+        { "method": "GET", "path": "/contacts", "description": "Get all contact messages" }
+      ]
+    },
+    {
+      "group": "Feedback",
+      "routes": [
+        { "method": "POST", "path": "/feedback", "description": "Submit feedback" },
+        { "method": "GET", "path": "/feedback", "description": "Get all feedback" }
+      ]
+    },
+    {
+      "group": "Users",
+      "routes": [
+        { "method": "GET", "path": "/user", "description": "Get all users" },
+        { "method": "GET", "path": "/user/:id", "description": "Get user by ID" },
+        { "method": "PUT", "path": "/user/:id", "description": "Update user by ID" }
+      ]
+    },
+    {
+      "group": "Adopted",
+      "routes": [
+        { "method": "GET", "path": "/adopted", "description": "Get all adopted pets" }
+      ]
+    },
+    {
+      "group": "Counts",
+      "routes": [
+        { "method": "GET", "path": "/counts", "description": "Get entity counts (pets, users, etc.)" }
+      ]
+    }
+  ]
+}
+
+{
+  "info": {
+    "_postman_id": "",
+    "name": "Admin Authentication API",
+    "description": "Postman collection for Admin registration, login, logout, profile fetch, and update.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Register Admin",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"regNo\": \"A123\",\n  \"name\": \"Admin Name\",\n  \"email\": \"admin@example.com\",\n  \"username\": \"adminuser\",\n  \"password\": \"adminpass\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5000/admin/register",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["admin", "register"]
+        }
+      }
+    },
+    {
+      "name": "Login Admin",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"adminuser\",\n  \"password\": \"adminpass\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5000/admin/login",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["admin", "login"]
+        }
+      }
+    },
+    {
+      "name": "Logout Admin",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/admin/logout",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["admin", "logout"]
+        }
+      }
+    },
+    {
+      "name": "Get Admin Profile by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/admin/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["admin", "1"]
+        }
+      }
+    },
+    {
+      "name": "Update Admin Profile by ID",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"regNo\": \"A123\",\n  \"name\": \"Updated Admin\",\n  \"email\": \"updated@example.com\",\n  \"username\": \"adminuser\",\n  \"password\": \"newpass123\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5000/admin/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["admin", "1"]
+        }
+      }
+    },
+    {
+      "name": "Protected Profile Route",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/admin/profile",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["admin", "profile"]
+        }
+      }
+    }
+  ]
+}
+
+
+{
+  "info": {
+    "name": "Adopted Pets API",
+    "_postman_id": "",
+    "description": "Collection to test the adopted pets endpoint",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get All Adopted Pets",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/adopted",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["adopted"]
+        }
+      },
+      "response": []
+    }
+  ]
+}
+
+{
+  "info": {
+    "_postman_id": "",
+    "name": "User Authentication API",
+    "description": "API documentation for user authentication including registration, login, logout, and profile endpoints.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Register User",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "description": "Content type for the request body"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"regNo\": \"12345\",\n  \"name\": \"John Doe\",\n  \"email\": \"johndoe@example.com\",\n  \"username\": \"johndoe\",\n  \"password\": \"password123\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/register",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "register"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Login User",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "description": "Content type for the request body"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"johndoe\",\n  \"password\": \"password123\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/login",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "login"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Logout User",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/logout",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "logout"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Profile (Protected)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Cookie",
+            "value": "token={{authToken}}",
+            "description": "Pass the auth token from login"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/profile",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "profile"]
+        }
+      },
+      "response": []
+    }
+  ]
+}
+
+{
+  "info": {
+    "_postman_id": "",
+    "name": "Contact API",
+    "description": "API documentation for managing contact submissions, including fetching all contacts and submitting new contact messages.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get All Contacts",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/contacts",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "contacts"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Submit Contact Message",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "description": "Content type for the request body"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"johndoe@example.com\",\n  \"phone\": \"1234567890\",\n  \"message\": \"I have a question regarding the pet adoption process.\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/contacts",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "contacts"]
+        }
+      },
+      "response": []
+    }
+  ]
+}
+
+{
+  "info": {
+    "_postman_id": "",
+    "name": "Counts API",
+    "description": "API documentation for fetching various counts, such as the total number of pets, users, adoptions, and feedback.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get Counts",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/counts",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "counts"]
+        }
+      },
+      "response": [
+        {
+          "status": "OK",
+          "code": 200,
+          "body": "{\"success\": true, \"data\": {\"total_pets\": 100, \"total_users\": 50, \"total_adoptions\": 20, \"total_feedbacks\": 40}}"
+        }
+      ]
+    }
+  ]
+}
+
+{
+  "info": {
+    "_postman_id": "",
+    "name": "Feedback API",
+    "description": "API documentation for managing feedback. Includes endpoints to add feedback, get all feedback, and get feedback by ID.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Add Feedback",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"name\": \"John Doe\",\n    \"email\": \"john@example.com\",\n    \"comment\": \"Great service!\",\n    \"rating\": 5\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/feedback",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "feedback"]
+        }
+      },
+      "response": [
+        {
+          "status": "OK",
+          "code": 201,
+          "body": "{\"name\":\"John Doe\",\"email\":\"john@example.com\",\"comment\":\"Great service!\",\"rating\":5,\"visible\":true}"
+        }
+      ]
+    },
+    {
+      "name": "Get All Feedback",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/api/feedback",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "feedback"]
+        }
+      },
+      "response": [
+        {
+          "status": "OK",
+          "code": 200,
+          "body": "[\n    {\n        \"id\": 1,\n        \"name\": \"John Doe\",\n        \"email\": \"john@example.com\",\n        \"comment\": \"Great service!\",\n        \"rating\": 5,\n        \"visible\": true\n    }\n]"
+        }
+      ]
+    },
+    {
+      "name": "Get Feedback by ID",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/api/feedback/1",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "feedback", "1"]
+        }
+      },
+      "response": [
+        {
+          "status": "OK",
+          "code": 200,
+          "body": "{\n    \"id\": 1,\n    \"name\": \"John Doe\",\n    \"email\": \"john@example.com\",\n    \"comment\": \"Great service!\",\n    \"rating\": 5,\n    \"visible\": true\n}"
+        }
+      ]
+    }
+  ]
+}
+
+{
+  "info": {
+    "_postman_id": "",
+    "name": "Personalities API",
+    "description": "API documentation for managing personalities. Includes endpoints to create, read, update, and delete personalities.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get All Personalities",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/api/personalities",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "personalities"]
+        }
+      },
+      "response": [
+        {
+          "status": "OK",
+          "code": 200,
+          "body": "[\n  {\n    \"id\": 1,\n    \"name\": \"Friendly\"\n  },\n  {\n    \"id\": 2,\n    \"name\": \"Shy\"\n  }\n]"
+        }
+      ]
+    },
+    {
+      "name": "Create Personality",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Brave\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/personalities",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "personalities"]
+        }
+      },
+      "response": [
+        {
+          "status": "OK",
+          "code": 201,
+          "body": "{\n  \"id\": 3,\n  \"name\": \"Brave\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Update Personality",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Fearless\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/personalities/3",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "personalities", "3"]
+        }
+      },
+      "response": [
+        {
+          "status": "OK",
+          "code": 200,
+          "body": "{\n  \"id\": 3,\n  \"name\": \"Fearless\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Delete Personality",
+      "request": {
+        "method": "DELETE",
+        "url": {
+          "raw": "{{baseUrl}}/api/personalities/3",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "personalities", "3"]
+        }
+      },
+      "response": [
+        {
+          "status": "OK",
+          "code": 204
+        }
+      ]
+    },
+    {
+      "name": "Get Personality by ID",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/api/personalities/1",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "personalities", "1"]
+        }
+      },
+      "response": [
+        {
+          "status": "OK",
+          "code": 200,
+          "body": "{\n  \"id\": 1,\n  \"name\": \"Friendly\"\n}"
+        }
+      ]
+    }
+  ]
+}
+
+{
+  "info": {
+    "_postman_id": "",
+    "name": "Pets API",
+    "description": "API documentation for managing pets. Includes endpoints for CRUD operations, mood filtering, and pet adoption.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create Pet",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Bella\",\n  \"species_id\": 1,\n  \"age\": 2,\n  \"personality_id\": 1\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/pets",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "pets"]
+        }
+      },
+      "response": [
+        {
+          "status": "OK",
+          "code": 201,
+          "body": "{\n  \"id\": 1,\n  \"name\": \"Bella\",\n  \"species_id\": 1,\n  \"age\": 2,\n  \"personality_id\": 1,\n  \"adopted\": false,\n  \"created_at\": \"2025-05-04T00:00:00Z\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Get All Pets",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/api/pets",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "pets"]
+        }
+      },
+      "response": [
+        {
+          "status": "OK",
+          "code": 200,
+          "body": "[\n  {\n    \"id\": 1,\n    \"name\": \"Bella\",\n    \"species\": \"Dog\",\n    \"personality\": \"Friendly\",\n    \"mood\": \"Happy\"\n  },\n  {\n    \"id\": 2,\n    \"name\": \"Max\",\n    \"species\": \"Cat\",\n    \"personality\": \"Shy\",\n    \"mood\": \"Sad\"\n  }\n]"
+        }
+      ]
+    },
+    {
+      "name": "Get Pet by ID",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/api/pets/1",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "pets", "1"]
+        }
+      },
+      "response": [
+        {
+          "status": "OK",
+          "code": 200,
+          "body": "{\n  \"id\": 1,\n  \"name\": \"Bella\",\n  \"species\": \"Dog\",\n  \"personality\": \"Friendly\",\n  \"mood\": \"Happy\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Update Pet",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Bella the Brave\",\n  \"species_id\": 1,\n  \"age\": 3,\n  \"personality_id\": 2\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/pets/1",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "pets", "1"]
+        }
+      },
+      "response": [
+        {
+          "status": "OK",
+          "code": 200,
+          "body": "{\n  \"id\": 1,\n  \"name\": \"Bella the Brave\",\n  \"species\": \"Dog\",\n  \"personality\": \"Shy\",\n  \"mood\": \"Excited\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Delete Pet",
+      "request": {
+        "method": "DELETE",
+        "url": {
+          "raw": "{{baseUrl}}/api/pets/1",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "pets", "1"]
+        }
+      },
+      "response": [
+        {
+          "status": "OK",
+          "code": 204
+        }
+      ]
+    },
+    {
+      "name": "Filter Pets by Mood",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/api/pets/filter/mood?mood=Happy",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "pets", "filter", "mood"],
+          "query": [
+            {
+              "key": "mood",
+              "value": "Happy"
+            }
+          ]
+        }
+      },
+      "response": [
+        {
+          "status": "OK",
+          "code": 200,
+          "body": "[\n  {\n    \"id\": 1,\n    \"name\": \"Bella\",\n    \"species\": \"Dog\",\n    \"personality\": \"Friendly\",\n    \"mood\": \"Happy\"\n  }\n]"
+        }
+      ]
+    },
+    {
+      "name": "Adopt Pet",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{authToken}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/pets/1/adopt",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "pets", "1", "adopt"]
+        }
+      },
+      "response": [
+        {
+          "status": "OK",
+          "code": 200,
+          "body": "{\n  \"id\": 1,\n  \"name\": \"Bella\",\n  \"species\": \"Dog\",\n  \"personality\": \"Friendly\",\n  \"adopted\": true,\n  \"adoption_date\": \"2025-05-04T00:00:00Z\"\n}"
+        }
+      ]
+    }
+  ]
+}
+
+{
+  "info": {
+    "_postman_id": "",
+    "name": "Species API",
+    "description": "API documentation for managing species. Includes CRUD operations for species management with validation and error handling.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create Species",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Dog\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/species",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "species"]
+        }
+      },
+      "response": [
+        {
+          "status": "OK",
+          "code": 201,
+          "body": "{\n  \"success\": true,\n  \"data\": {\n    \"id\": 1,\n    \"name\": \"Dog\"\n  }\n}"
+        },
+        {
+          "status": "Bad Request",
+          "code": 400,
+          "body": "{\n  \"success\": false,\n  \"error\": \"Species name is required.\",\n  \"details\": {\n    \"name\": \" \"\n  }\n}"
+        }
+      ]
+    },
+    {
+      "name": "Get All Species",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/api/species",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "species"]
+        }
+      },
+      "response": [
+        {
+          "status": "OK",
+          "code": 200,
+          "body": "{\n  \"success\": true,\n  \"data\": [\n    {\n      \"id\": 1,\n      \"name\": \"Dog\"\n    },\n    {\n      \"id\": 2,\n      \"name\": \"Cat\"\n    }\n  ]\n}"
+        }
+      ]
+    },
+    {
+      "name": "Get Species by ID",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/api/species/1",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "species", "1"]
+        }
+      },
+      "response": [
+        {
+          "status": "OK",
+          "code": 200,
+          "body": "{\n  \"success\": true,\n  \"data\": {\n    \"id\": 1,\n    \"name\": \"Dog\"\n  }\n}"
+        },
+        {
+          "status": "Not Found",
+          "code": 404,
+          "body": "{\n  \"success\": false,\n  \"error\": \"Species not found.\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Update Species",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Dog Updated\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/species/1",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "species", "1"]
+        }
+      },
+      "response": [
+        {
+          "status": "OK",
+          "code": 200,
+          "body": "{\n  \"success\": true,\n  \"data\": {\n    \"id\": 1,\n    \"name\": \"Dog Updated\"\n  }\n}"
+        },
+        {
+          "status": "Bad Request",
+          "code": 400,
+          "body": "{\n  \"success\": false,\n  \"error\": \"Species name is required.\",\n  \"details\": {\n    \"name\": \" \"\n  }\n}"
+        },
+        {
+          "status": "Not Found",
+          "code": 404,
+          "body": "{\n  \"success\": false,\n  \"error\": \"Species not found.\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Delete Species",
+      "request": {
+        "method": "DELETE",
+        "url": {
+          "raw": "{{baseUrl}}/api/species/1",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "species", "1"]
+        }
+      },
+      "response": [
+        {
+          "status": "OK",
+          "code": 204
+        },
+        {
+          "status": "Not Found",
+          "code": 404,
+          "body": "{\n  \"success\": false,\n  \"error\": \"Species not found.\"\n}"
+        }
+      ]
+    }
+  ]
+}
+
+{
+  "info": {
+    "_postman_id": "",
+    "name": "User API",
+    "description": "API documentation for managing users. Includes operations for fetching and updating users with validation and error handling.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get All Users",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/api/users",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "users"]
+        }
+      },
+      "response": [
+        {
+          "status": "OK",
+          "code": 200,
+          "body": "{\n  \"id\": 1,\n  \"name\": \"John Doe\",\n  \"email\": \"johndoe@example.com\",\n  \"username\": \"johndoe\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Get User by ID",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/api/users/1",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "users", "1"]
+        }
+      },
+      "response": [
+        {
+          "status": "OK",
+          "code": 200,
+          "body": "{\n  \"id\": 1,\n  \"name\": \"John Doe\",\n  \"email\": \"johndoe@example.com\",\n  \"username\": \"johndoe\"\n}"
+        },
+        {
+          "status": "Not Found",
+          "code": 404,
+          "body": "{\n  \"message\": \"User not found\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Update User",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"John Doe Updated\",\n  \"email\": \"johnupdated@example.com\",\n  \"username\": \"johndoeupdated\",\n  \"password\": \"newpassword123\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/users/1",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "users", "1"]
+        }
+      },
+      "response": [
+        {
+          "status": "OK",
+          "code": 200,
+          "body": "{\n  \"message\": \"User updated successfully\"\n}"
+        },
+        {
+          "status": "Bad Request",
+          "code": 400,
+          "body": "{\n  \"message\": \"Invalid input. All fields must be provided.\"\n}"
+        },
+        {
+          "status": "Not Found",
+          "code": 404,
+          "body": "{\n  \"message\": \"User not found or not updated\"\n}"
+        }
+      ]
+    }
+  ]
+}
