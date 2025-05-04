@@ -163,7 +163,22 @@ Adoption endpoints
 
 Feedback and messages
 
-🛠 Example SQL Schema (simplified)
+
+🛠 Database Setup
+The full database schema and seed data are located at:
+
+/backend/db/setup.sql
+To set up the database:
+
+psql -U your_username -d your_databasename -f db/setup.sql
+📄 API Documentation
+All API routes with example requests and responses are included in:
+
+bash
+Copy
+Edit
+/backend/api-docs.json
+You can import this JSON file into Postman for testing.
 
 👨‍💻 Developer
 Name: Kirujan Amirthalingam
