@@ -1,7 +1,4 @@
 
-markdown
-Copy
-Edit
 # 🐾 Pawzio - Virtual Pet Adoption Center
 
 Pawzio is a full-stack web application where users can register, log in, browse and adopt virtual pets, leave feedback, and contact admins. Admins have full control over pets, feedback, customer details, and adoption records.
@@ -118,7 +115,7 @@ cd backend
 Install dependencies:
 
 npm install
-Create .env file:
+ .env file:
 
 PORT=5000
 DATABASE_URL=postgresql://username:password@localhost:5432/pawzio
@@ -174,10 +171,7 @@ psql -U your_username -d your_databasename -f db/setup.sql
 📄 API Documentation
 All API routes with example requests and responses are included in:
 
-bash
-Copy
-Edit
-/backend/api-docs.json
+/backend/.json
 You can import this JSON file into Postman for testing.
 
 👨‍💻 Developer
