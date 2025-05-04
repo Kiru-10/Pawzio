@@ -106,7 +106,7 @@ Pawzio is a full-stack web application where users can register, log in, browse 
 ### 📦 Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/pawzio.git
+git clone https://github.com/Kiru-10/pawzio.git
 cd pawzio
 🔙 Backend Setup
 Navigate to backend:
