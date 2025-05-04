@@ -117,11 +117,19 @@ Install dependencies:
 npm install
  .env file:
 
-PORT=5000
-DATABASE_URL=postgresql://username:password@localhost:5432/pawzio
-JWT_SECRET=your_jwt_secret
-COOKIE_SECRET=your_cookie_secret
-Setup PostgreSQL database:
+DB_USER=postgres
+DB_HOST=localhost
+DB_NAME=database
+DB_PASSWORD=password
+
+DB_PORT=""
+
+PORT=""
+NODE_ENV=development
+
+JWT_SECRET=""
+JWT_EXPIRES_IN=""
+
 
 Run the schema script or use a tool like pgAdmin to create necessary tables (users, pets, feedbacks, messages, adoptions, etc.).
 
